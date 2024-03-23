@@ -5,13 +5,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: archlinux:latest
-      options: --privileged
     steps:
       - name: Prepare build environment
-        run: |
+        uses: easimon/maximize-build-space@master
+        with:
+          swap-size-mb: 2
+          remove-dotnet: 'true'
+          remove-android: 'true'
+
+      - name: hehe
+        uses: docker://archlinux:latest
+        with:
+          args: |
           df -h
-          ls -ltha /usr/bin
-          pacman -Q
-          
