@@ -1,0 +1,21 @@
+name: Build System Image (beta-dev_nv)
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+    steps:
+      - name: Prepare build environment
+        run: |
+          pacman-key --init
+          pacman --noconfirm -Syu btrfs-progs archiso git reflector
+          git clone https://github.com/holoiso-staging/buildroot buildroot
+          git clone https://github.com/holoiso-staging/postcopy -b dev_nv buildroot/postcopy_beta-dev_nv
+      - name: Build image 
+        run: |
+          mkdir -p $(pwd)/output $(pwd)/workdir
+          bash buildroot/build.sh --flavor beta-dev_nv --deployment_rel beta-dev_nv --snapshot_ver "${GITHUB_REF_NAME}" --workdir $(pwd)/workdir --output-dir $(pwd)/output/holoiso-images --add-release
