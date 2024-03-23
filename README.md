@@ -1,0 +1,2 @@
+# releasegenerator
+Release generation action
