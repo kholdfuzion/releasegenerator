@@ -19,7 +19,7 @@ jobs:
           git clone https://github.com/holoiso-staging/buildroot buildroot
           git clone https://github.com/holoiso-staging/postcopy -b dev_nv buildroot/postcopy_beta-dev_nv
           mkdir /mnt/build
-          echo '$storageBoxPassword' | sshfs -o password_stdin -oStrictHostKeyChecking=no "$storageBoxLink":/ /mnt/build
+          echo "$storageBoxPassword" | sshfs -o password_stdin -oStrictHostKeyChecking=no "$storageBoxLink":/ /mnt/build
       - name: Build image 
         run: |
           mkdir -p $(pwd)/output $(pwd)/workdir
