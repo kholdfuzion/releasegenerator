@@ -9,10 +9,9 @@ jobs:
       image: archlinux:latest
       options: --privileged
     steps:
-      - name: Maximize build disk space
-        uses: easimon/maximize-build-space@v10
-        
       - name: Prepare build environment
         run: |
           df -h
+          ls -ltha /usr/bin
+          pacman -Q
           
