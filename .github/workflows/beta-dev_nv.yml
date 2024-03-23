@@ -10,11 +10,16 @@ jobs:
       options: --privileged
     steps:
       - name: Prepare build environment
+        env:
+          storageBoxLink: ${{ secrets.STORAGE_BOX_LINK }}
+          storageBoxPassword: ${{ secrets.STORAGE_BOX_PASSWORD }}
         run: |
           pacman-key --init
-          pacman --noconfirm -Syu btrfs-progs archiso git reflector
+          pacman --noconfirm -Syu btrfs-progs archiso git reflector sshfs
           git clone https://github.com/holoiso-staging/buildroot buildroot
           git clone https://github.com/holoiso-staging/postcopy -b dev_nv buildroot/postcopy_beta-dev_nv
+          mkdir /mnt/build
+          echo '$storageBoxPassword' | sshfs -o password_stdin $storageBoxLink:/ /mnt/build
       - name: Build image 
         run: |
           mkdir -p $(pwd)/output $(pwd)/workdir
