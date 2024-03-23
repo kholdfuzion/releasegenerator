@@ -17,4 +17,4 @@ jobs:
         uses: docker://archlinux:latest
         with:
           args: |
-          df -h
+            df -h
