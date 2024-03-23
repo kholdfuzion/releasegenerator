@@ -16,5 +16,6 @@ jobs:
       - name: Build Image
         uses: docker://archlinux:latest
         with:
+          options: --privileged
           args: |
             ./build.sh beta
