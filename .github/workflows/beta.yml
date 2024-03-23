@@ -18,4 +18,4 @@ jobs:
         with:
           options: --privileged
           args: |
-            su -c '/bin/bash build.sh beta'
+            ./build.sh beta

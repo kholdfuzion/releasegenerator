@@ -1,5 +1,8 @@
 #!/bin/bash
+id -u
+whoami
 
+sleep 20
 if [[ "$1" =~ "dev" ]]; then
     POSTCOPY_CLONE=$(echo $1 | sed 's/.*dev/dev/g')
 else
