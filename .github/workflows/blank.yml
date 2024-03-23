@@ -12,7 +12,8 @@ jobs:
           swap-size-mb: 2
           remove-dotnet: 'true'
           remove-android: 'true'
-
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: hehe
         uses: docker://archlinux:latest
         with:
