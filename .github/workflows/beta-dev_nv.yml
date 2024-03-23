@@ -22,5 +22,5 @@ jobs:
           echo "$storageBoxPassword" | sshfs -o password_stdin -oStrictHostKeyChecking=no "$storageBoxLink":/ /mnt/build
       - name: Build image 
         run: |
-          mkdir -p $(pwd)/output $(pwd)/workdir
-          bash buildroot/build.sh --flavor beta-dev_nv --deployment_rel beta-dev_nv --snapshot_ver "${GITHUB_REF_NAME}" --workdir $(pwd)/workdir --output-dir /mnt/build --add-release
+          mkdir -p $(pwd)/workdir
+          bash buildroot/build.sh --flavor beta-dev_nv --deployment_rel beta-dev_nv --snapshot_ver "${GITHUB_REF_NAME}" --workdir $(pwd)/workdir --output-dir /mnt/build/holoiso-images --add-release
