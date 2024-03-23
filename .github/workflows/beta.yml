@@ -17,4 +17,4 @@ jobs:
         uses: docker://archlinux:latest
         with:
           args: |
-            "bash build.sh beta"
+            "ls && bash build.sh beta"
