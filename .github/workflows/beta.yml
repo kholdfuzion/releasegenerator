@@ -5,17 +5,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: archlinux:latest
-      options: --privileged
     steps:
       - name: Prepare build environment
-        run: |
-          pacman-key --init
-          pacman --noconfirm -Syu btrfs-progs archiso git reflector
-          git clone https://github.com/holoiso-staging/buildroot buildroot
-          git clone https://github.com/holoiso-staging/postcopy -b beta buildroot/postcopy_beta
-      - name: Build image 
-        run: |
-          mkdir -p $(pwd)/output $(pwd)/workdir
-          bash buildroot/build.sh --flavor beta --deployment_rel beta --snapshot_ver "${GITHUB_REF_NAME}" --workdir $(pwd)/workdir --output-dir $(pwd)/output/holoiso-images --add-release
+        uses: easimon/maximize-build-space@master
+        with:
+          swap-size-mb: 2
+          remove-dotnet: 'true'
+          remove-android: 'true'
+
+      - name: Build Image
+        uses: docker://archlinux:latest
+        with:
+          args: |
+            pacman-key --init
+            pacman --noconfirm -Syu btrfs-progs archiso git reflector
+            git clone https://github.com/holoiso-staging/buildroot buildroot
+            git clone https://github.com/holoiso-staging/postcopy -b beta buildroot/postcopy_beta
+            mkdir -p $(pwd)/output $(pwd)/workdir
+            bash buildroot/build.sh --flavor beta --deployment_rel beta --snapshot_ver "${GITHUB_REF_NAME}" --workdir $(pwd)/workdir --output-dir $(pwd)/output/holoiso-images --add-release
